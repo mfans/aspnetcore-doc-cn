@@ -1,13 +1,13 @@
 ﻿:version: 1.0.0-rc1
 
-Enabling Cross-Origin Requests (CORS)
+使用跨域跨域请求 (CORS)
 =====================================
 
 By `Mike Wasson`_
 
-Browser security prevents a web page from making AJAX requests to another domain. This restriction is called the *same-origin policy*, and prevents a malicious site from reading sensitive data from another site. However, sometimes you might want to let other sites make cross-origin requests to your web app.
+浏览器安全阻止一个web页面通过ajax访问另外一个域. 这个限制叫做 *同源策略*, 它阻止一个恶意站点读取另外一个网站的敏感数据. 然而, 有时候你想让别的网站跨域访问你的web程序.
 
-`Cross Origin Resource Sharing <http://www.w3.org/TR/cors/>`_ (CORS) is a W3C standard that allows a server to relax the same-origin policy. Using CORS, a server can explicitly allow some cross-origin requests while rejecting others. CORS is safer and more flexible than earlier techniques such as `JSONP <http://en.wikipedia.org/wiki/JSONP>`_. This topic shows how to enable CORS in your ASP.NET Core application.
+`跨域资源共享 <http://www.w3.org/TR/cors/>`_ (CORS) 是一个W3C 标准, 它允许服务器放宽同源策略. 通过使用 CORS, 服务器可以明确的允许一些跨域请求,也可以拒绝其他请求. CORS 比过去的一些技术更安全,更灵活. 例如 `JSONP <http://en.wikipedia.org/wiki/JSONP>`_. 这个主题将说明如何在你的ASP.NET Core程序中使用CORS.
 
 .. contents:: Sections:
   :local:
