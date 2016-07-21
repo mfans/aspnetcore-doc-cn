@@ -13,26 +13,26 @@ By `Mike Wasson`_
   :local:
   :depth: 1
 
-What is "same origin"?
+什么是 "同源"?
 ----------------------
 
-Two URLs have the same origin if they have identical schemes, hosts, and ports. (`RFC 6454 <http://tools.ietf.org/html/rfc6454>`_)
+具有相同的协议,域名,端口的2个Url即为同源. (`RFC 6454 <http://tools.ietf.org/html/rfc6454>`_)
 
-These two URLs have the same origin:
+这2个Url属于同源:
 
 - \http://example.com/foo.html
 - \http://example.com/bar.html
 
-These URLs have different origins than the previous two:
+相对于前面2个Url,这些Url都不是同源:
 
-- \http://example.net - Different domain
-- \http://example.com:9000/foo.html - Different port
-- \https://example.com/foo.html - Different scheme
-- \http://www.example.com/foo.html - Different subdomain
+- \http://example.net - 不同域名
+- \http://example.com:9000/foo.html - 不同端口
+- \https://example.com/foo.html - 不同的协议
+- \http://www.example.com/foo.html - 不同的子域名
 
-.. note:: Internet Explorer does not consider the port when comparing origins.
+.. 注意:: IE浏览器判断同源时不比较端口.
 
-Setting up CORS
+使用 CORS
 ---------------
 
 To setup CORS for your application you use the ``Microsoft.AspNetCore.Cors`` package. In your project.json file, add the following:
