@@ -1,6 +1,6 @@
 ﻿:version: 1.0.0-rc1
 
-使用跨域跨域请求 (CORS)
+使用跨域请求 (CORS)
 =====================================
 
 By `Mike Wasson`_
@@ -30,40 +30,43 @@ By `Mike Wasson`_
 - \https://example.com/foo.html - 不同的协议
 - \http://www.example.com/foo.html - 不同的子域名
 
-.. 注意:: IE浏览器判断同源时不比较端口.
+注意
 
-使用 CORS
+IE浏览器判断同源时不比较端口.
+
+启用 CORS
 ---------------
 
-To setup CORS for your application you use the ``Microsoft.AspNetCore.Cors`` package. In your project.json file, add the following:
+使用 ``Microsoft.AspNetCore.Cors`` 包来为你的程序启用CORS功能. 在 project.json 文件, 添加以下描述:
 
 .. literalinclude:: cors/sample/src/CorsExample1/project.json
   :language: none
   :lines: 5,6,9
   :emphasize-lines: 2
   
-Add the CORS services in Startup.cs:
+在Startup.cs中添加CORS服务:
 
 .. literalinclude:: cors/sample/src/CorsExample1/Startup.cs
   :language: csharp
   :lines: 9-12
   :dedent: 8
 
-Enabling CORS with middleware
+通过中间件的方式启用CORS
 -----------------------------
 
+为了使你的整个程序启用CORS,需要使用``UseCors``扩展方法来添加CORS中间件到请求管道中.注意,
 To enable CORS for your entire application add the CORS middleware to your request pipeline using the ``UseCors`` extension method. Note that the CORS middleware must proceed any defined endpoints in your app that you want to support cross-origin requests (ex. before any call to ``UseMvc``).
 
-You can specify a cross-origin policy when adding the CORS middleware using the ``CorsPolicyBuilder`` class. There are two ways to do this. The first is to call UseCors with a lambda:
+添加CORS中间件时,你可以通过使用``CorsPolicyBuilder``类来指定一个跨域策略.这里有2个方法.第一个方法通过lambda表达式调用UseCors:
 
 .. literalinclude:: cors/sample/src/CorsExample1/Startup.cs
   :language: csharp
   :lines: 15-18, 24
   :dedent: 8
 
-The lambda takes a CorsPolicyBuilder object. I’ll describe all of the configuration options later in this topic. In this example, the policy allows cross-origin requests from "\http://example.com" and no other origins.
+lambda表达式获取一个CorsPolicyBuilder对象. 在这个主题结束后,将描述所有的配置选项.在这个例子中, 策略允许 "\http://example.com" 的跨域请求,其他跨域请求会被拒绝.
 
-Note that CorsPolicyBuilder has a fluent API, so you can chain method calls:
+注意 CorsPolicyBuilder有一个fluent API, 因此你可以进行链式方法调用:
 
 .. literalinclude:: cors/sample/src/CorsExample3/Startup.cs
   :language: csharp
@@ -71,46 +74,46 @@ Note that CorsPolicyBuilder has a fluent API, so you can chain method calls:
   :dedent: 12
   :emphasize-lines: 3
 
-The second approach is to define one or more named CORS policies, and then select the policy by name at run time.
+第二个方法,你可以通过命名的方式定义一个或者多个策略,然后在运行的时候通过名字来指定使用的策略.
 
 .. literalinclude:: cors/sample/src/CorsExample2/Startup.cs
   :language: csharp
   :lines: 9-17,19-26,27
   :dedent: 8
 
-This example adds a CORS policy named "AllowSpecificOrigin". To select the policy, pass the name to UseCors.
+这个例子添加了一个名字叫 "AllowSpecificOrigin" CORS策略. 要选择这个策略, 需要把策略的名字传入 UseCors.
 
 .. _cors-policy-options:
 
-Enabling CORS in MVC
+在MVC中启用CORS
 --------------------
 
-You can alternatively use MVC to apply specific CORS per action, per controller, or globally for all controllers. When using MVC to enable CORS the same CORS services are used, but the CORS middleware is not.
+在MVC中,你可以选择性的为每个action,每个controller或者通过全局配置为所有controller来启用CORS. When using MVC to enable CORS the same CORS services are used, but the CORS middleware is not.
 
-Per action
+针对每个action
 ^^^^^^^^^^
 
-To specify a CORS policy for a specific action add the ``[EnableCors]`` attribute to the action. Specify the policy name.
+通过在action添加 ``[EnableCors]`` 属性来为action添加CORS策略. 要指定策略名字.
 
 .. literalinclude:: cors/sample/src/CorsMvc/Controllers/HomeController.cs
     :language: csharp
     :lines: 7-13
     :dedent: 4
 
-Per controller
+针对每个controller
 ^^^^^^^^^^^^^^
 
-To specify the CORS policy for a specific controller add the ``[EnableCors]`` attribute to the controller class. Specify the policy name.
+通过在controller类添加 ``[EnableCors]`` 属性来为controller添加CORS策略. 要指定策略名字.
 
 .. literalinclude:: cors/sample/src/CorsMvc/Controllers/HomeController.cs
     :language: csharp
     :lines: 6-8
     :dedent: 4
 
-Globally
+全局配置
 ^^^^^^^^
 
-You can enable CORS globally for all controllers by adding the ``CorsAuthorizationFilterFactory`` filter to the global filter collection:
+为所有的controller启用CORS，你需要添加 ``CorsAuthorizationFilterFactory`` 过滤器到全局过滤器集合里:
 
 .. literalinclude:: cors/sample/src/CorsMvc/Startup.cs
     :language: csharp
